@@ -1,4 +1,7 @@
 CC = gcc
-CFLAGS = -o
+CFLAGS = -Wall -o 
+lib = -lncurses
 main: main.c
-	$(CC) main.c $(CFLAGS)  main -lncurses
+	$(CC) main.c $(CFLAGS) $@ $(lib)
+clean:
+	rm -f main a.out

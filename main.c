@@ -29,35 +29,60 @@ void render(WINDOW *cell[], char c[], int a){
 }
 int main(){
 	init();
-	char selectw[6];
+	
+	char selectw[6], guessw[] = "     ", temp;
 	randoms(selectw);
-	char guessw[] = "     ", temp;
+	FILE *fp = fopen("allowed_words.txt", "r");
+	short statusw[5] = {0}, game = 1;
+
 	WINDOW *cell[5];
 	for(int i = 0; i < 5; i++)cell[i] = newwin(3, 5, 0, i * 5 + 1);
+	
 	WINDOW *status = newwin(4, 90, 18, 0);
 	box(status, 0, 0);	
 	wrefresh(status);
+
 	drawboxes(cell);
-	for(int i = 0;;){
-		temp = getch();
-		if(temp == 10){ 
-			if(i > 4){ if(search(guessw, 1, size))break; wprintw(status, "NOT A WORD IN LIST!!"); wrefresh(status);}
-			else{
-				mvwaddstr(status, 1, 2, "TOO SHORT!!"); wrefresh(status);
+	while(game){
+		game = 0;
+		for(int i = 0;;){
+			temp = getch();
+			if(temp == 10){ 
+				if(i > 4){
+					if(search(fp, guessw, 1, size))break; 
+					wprintw(status, "NOT A WORD IN LIST!");
+					wrefresh(status);
+				}
+				else{
+					mvwaddstr(status, 1, 2, "TOO SHORT!!"); wrefresh(status);
+				}
 			}
+			else if(temp == 127 || temp == 8)i = (i == 0)? 0: i - 1;
+			else if(i > 4 || temp < 97 || temp > 123);
+			else{ 
+				guessw[i] = temp; 
+				i++;
+			}
+			render(cell, guessw, i);
 		}
-		else if(temp == 127 || temp == 8)i = (i == 0)? 0: i - 1;
-		else if(i > 4 || temp < 97 || temp > 123);
-		else{ 
-			guessw[i] = temp; 
-			i++;
+		check_the_word(guessw, selectw, statusw);
+		
+		for(int i = 0; i < 5; i++){
+			if(statusw[i] > 0) game = 1;
+			wprintw(status, "%d ", statusw[i]); 
+			wrefresh(status);
 		}
-		render(cell, guessw, i);
 	}
-	wprintw(status, "%s", selectw);
+		
+	wprintw(status, "%s\n", selectw);
 	wrefresh(status);
+	
 	getch();
+	
 	del_box(cell);
+	fclose(fp);
+	
 	dest();
+	
 	return 0;
 }
