@@ -1,19 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#define upper 2314
-void randoms(FILE *fp, char *buff){
+void randoms(char *buff){
+	FILE *fp = fopen("possible_words.txt", "r");
 	srand(time(0));	
-	for(int i = 0; i < 6; i++){
-		fseek( fp, 6 * (rand() % (upper + 1)), SEEK_SET );
-		fscanf(fp, "%s", buff);
-	}
+	fseek( fp, 6 * (rand() % (upper + 1)), SEEK_SET );
+	fscanf(fp, "%s", buff);
+	*(buff + 5) = '\0';
+	fclose(fp);
 }
+/*
 int main() {
 
-	FILE *fp = fopen("possible_words.txt", "r");
 	char buff[5];
-	randoms(fp, buff);
+	randoms(buff);
 	printf("%s\n", buff);
 	return 0;
 }
+*/
