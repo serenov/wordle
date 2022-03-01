@@ -24,6 +24,7 @@ int gameOn(short statusw[], WINDOW *status){
 int main(){
 	init();
 	start_color();
+	use_default_colors();
 	char selectw[6];
 	char guessw[][6] = {"     \0", "     \0", "     \0", "     \0", "     \0"};
 	
