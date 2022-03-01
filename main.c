@@ -31,7 +31,6 @@ int main(){
 	short statusw[5] = {2};
 	WINDOW *cell[6][5];
 	
-//	mvprintw(0, 40, "%s\n", selectw);
 	
 	for(int j = 0; j < 6; j++)for(int i = 0; i < 5; i++){
 		cell[j][i] = newwin(3, 5, 3 * j + 1 , i * 5 + 1);
@@ -50,6 +49,7 @@ int main(){
 		j++;
 	}
 		
+	mvprintw(0, 40, "%s\n", selectw);
 	getch();	
 	
 

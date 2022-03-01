@@ -37,7 +37,7 @@ void render_cells_colors(WINDOW *cell[], char c[], short statusw[]){
 	move(1, 49);
 	for(int i = 0; i < 5; i++){
 		//wattron(cell[i], COLOR_PAIR(statusw[i]));
-		//printw("%d ", statusw[i]);
+		printw("%d ", statusw[i]);
 		wbkgd(cell[i], COLOR_PAIR(statusw[i] + 1));
 		mvwprintw(cell[i], 1, 2, "%c", c[i]); wrefresh(cell[i]);
 	}
