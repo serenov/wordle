@@ -7,3 +7,5 @@
 #include"file.c"
 #include"select.c"
 #include"logic.c"
+#include"status.c"
+#include"input.c"
